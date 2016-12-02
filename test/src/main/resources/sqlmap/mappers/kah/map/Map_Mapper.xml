@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.nahfhis.kah.map.service.impl.KahMapMapper">
+
+	<select id="selectMapDataList" parameterType="egovMap" resultType="egovMap">
+	<![CDATA[
+		SELECT ITEM_LINK_ID AS "itemLinkId"
+		       , ITEM_ID AS "itemId"
+		       , LEVEL_ID AS "levelId"
+		       , LINK_TYPES AS "linkTypes"
+		       , LINK_TITLE AS "linkTitle"
+		       , GIS_X AS "gisX"
+		       , GIS_Y AS "gisY"
+		  FROM ITEM_LINK
+	]]>
+		<where>
+			<if test="itemId != null and itemId != ''">
+			<![CDATA[		
+				AND LEVEL_ID LIKE #{itemId} + '.d' + '%'
+			]]>
+			</if>
+			<if test="linkTypes != null and linkTypes != ''">
+			<![CDATA[		
+				AND LINK_TYPES = #{linkTypes}
+			]]>
+			</if>
+		</where>
+	<![CDATA[
+		ORDER BY ITEM_LINK_ID DESC
+	]]>
+	</select>
+
+</mapper>
